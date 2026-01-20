@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyNotesLab - {% block title %}Manage your projects effectively{% endblock %}</title>
+</head>
+<body>
+    <div class="p-1 bg-blue-900 text-white">Admin dashboard - <a target="_blank" href="{% url 'admin:index' %}">manage</a></div>
+    <nav class="flex items-center justify-between">
+        <div>
+            <a href="{% url 'home' %}">My Notes Lab</a>
+        </div>
+        <div class="flex justify-end text-right"><a href="{% url 'add-project' %}">New Project</a></div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}{% endblock %}
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - DevDeck{% endblock %}
+
+{% block content %}
+    <h1>My Dashboard</h1>
+
+    {% for project in projects %}
+        <div>{{ project.title }}</div>
+    {% endfor %}
+{% endblock %}
