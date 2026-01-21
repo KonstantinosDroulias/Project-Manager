@@ -1,0 +1,30 @@
+<div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-lg space-y-3 px-4 pointer-events-none">
+    {% if messages %}
+        {% for message in messages %}
+
+            <div class="msg-toast pointer-events-auto shadow-lg rounded-lg p-4 text-white flex items-start justify-between gap-3 transform transition-all duration-300
+                {% if message.tags == 'success' %} bg-green-600 border-l-4 border-green-800
+                {% elif message.tags == 'error' %} bg-red-600 border-l-4 border-red-800
+                {% elif message.tags == 'warning' %} bg-yellow-500 border-l-4 border-yellow-700
+                {% else %} bg-blue-600 border-l-4 border-blue-800 {% endif %}">
+
+                <div class="flex items-center gap-2">
+                    {% if message.tags == 'success' %}
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    {% elif message.tags == 'error' %}
+                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    {% else %}
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    {% endif %}
+
+                    <span class="font-medium text-sm">{{ message }}</span>
+                </div>
+
+                <button onclick="this.closest('.msg-toast').remove()" class="text-white hover:text-gray-200 focus:outline-none hover:cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+</div>
