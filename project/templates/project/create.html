@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Create New Project{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Start a New Project</h1>
+        <p class="text-gray-600 mt-2">Fill in the details below to initialize your project workspace.</p>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+        <form method="POST" action=".">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="col-span-2">
+                    <label for="id_title" class="block text-gray-700 text-sm font-bold mb-2">
+                        Project Title <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" name="title" id="id_title" required
+                        class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="e.g. Personal Portfolio 2024">
+                </div>
+
+                <div>
+                    <label for="id_estimated_profit" class="block text-gray-700 text-sm font-bold mb-2">
+                        Estimated Profit ($)
+                    </label>
+                    <input type="number" name="estimated_profit" id="id_estimated_profit" step="0.01"
+                        class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="0.00">
+                </div>
+
+                <div class="flex items-center mt-8">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="is_active" id="id_is_active" checked class="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="ml-2 text-gray-700 font-medium">Mark as Active Project</span>
+                    </label>
+                </div>
+
+                <div class="col-span-2">
+                    <label for="id_description" class="block text-gray-700 text-sm font-bold mb-2">
+                        Description / The "Big Idea"
+                    </label>
+                    <textarea name="description" id="id_description" rows="4"
+                        class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Describe what you want to achieve..."></textarea>
+                </div>
+            </div>
+
+            <hr class="my-8 border-gray-200">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-3 border-b pb-1">Categories</label>
+                    <div class="max-h-48 overflow-y-auto space-y-2">
+                        {% for category in categories %}
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                            <input type="checkbox" name="categories" value="{{ category.id }}" class="rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-600">{{ category.title }}</span>
+                        </label>
+                        {% empty %}
+                        <p class="text-xs text-gray-400 italic">No categories found.</p>
+                        {% endfor %}
+                    </div>
+                    <a href="#" class="text-xs text-blue-500 hover:underline mt-2 inline-block">+ Add New Category</a>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-3 border-b pb-1">Tags</label>
+                    <div class="max-h-48 overflow-y-auto space-y-2">
+                        {% for tag in tags %}
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                            <input type="checkbox" name="tags" value="{{ tag.id }}" class="rounded text-green-600 focus:ring-green-500">
+                            <span class="text-sm text-gray-600">{{ tag.title }}</span>
+                        </label>
+                        {% empty %}
+                        <p class="text-xs text-gray-400 italic">No tags found.</p>
+                        {% endfor %}
+                    </div>
+                    <a href="#" class="text-xs text-blue-500 hover:underline mt-2 inline-block">+ Add New Tag</a>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-3 border-b pb-1">Skills Required</label>
+                    <div class="max-h-48 overflow-y-auto space-y-2">
+                        {% for skill in skills %}
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                            <input type="checkbox" name="skills" value="{{ skill.id }}" class="rounded text-purple-600 focus:ring-purple-500">
+                            <span class="text-sm text-gray-600">{{ skill.title }}</span>
+                        </label>
+                        {% empty %}
+                        <p class="text-xs text-gray-400 italic">No skills found.</p>
+                        {% endfor %}
+                    </div>
+                    <a href="#" class="text-xs text-blue-500 hover:underline mt-2 inline-block">+ Add New Skill</a>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-100">
+                <a href="{% url 'home' %}" class="text-gray-500 hover:text-gray-700 font-medium px-4 py-2">
+                    Cancel
+                </a>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                    Create Project
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
