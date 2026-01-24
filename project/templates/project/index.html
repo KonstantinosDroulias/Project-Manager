@@ -7,7 +7,7 @@
 
     <div class="flex items-center justify-between mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">My Projects</h1>
+            <h1 class="text-3xl font-bold text-gray-900">My Notes</h1>
             <p class="text-gray-500 mt-1">Manage and track your ideas from concept to completion.</p>
         </div>
         <a href="{% url 'add-project' %}"
@@ -15,29 +15,18 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
-            New Project
+            New Note
         </a>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         {% for project in projects %}
-        <a href="{% url 'single-project' project.id %}" class="block group">
+        <div class="block group">
             <div class="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col relative">
-
-                <div class="absolute top-5 right-5">
-                    {% if project.is_active %}
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            Active
-                        </span>
-                    {% else %}
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                            Archived
-                        </span>
-                    {% endif %}
-                </div>
-
-                <div class="mb-3 pr-16"> <h2 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                <a href="{% url 'single-project' project.id %}">
+                <div class="mb-3">
+                    <h2 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
                         {{ project.title }}
                     </h2>
                     <p class="text-xs text-gray-400 mt-1">Updated {{ project.updated|timesince }} ago</p>
@@ -50,23 +39,9 @@
                         <span class="italic text-gray-400">No description provided.</span>
                     {% endif %}
                 </div>
-
-                <div class="mt-auto pt-4 border-t border-gray-100 flex flex-wrap gap-2">
-                    {% for category in project.categories.all|slice:":2" %}
-                        <span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded border border-blue-100">
-                            {{ category.title }}
-                        </span>
-                    {% empty %}
-                        <span class="text-xs text-gray-400">Uncategorized</span>
-                    {% endfor %}
-
-                    {% if project.categories.count > 2 %}
-                         <span class="text-xs text-gray-400 py-1">+{{ project.categories.count|add:"-2" }} more</span>
-                    {% endif %}
-                </div>
-
+                </a>
             </div>
-        </a>
+        </div>
 
         {% empty %}
         <div class="col-span-1 md:col-span-2 lg:col-span-3">
@@ -76,10 +51,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900">No projects yet</h3>
-                <p class="text-gray-500 mt-1 mb-6">Get started by creating your first project idea.</p>
+                <h3 class="text-lg font-medium text-gray-900">No notes yet</h3>
+                <p class="text-gray-500 mt-1 mb-6">Get started by creating your first note.</p>
                 <a href="{% url 'add-project' %}" class="text-blue-600 font-medium hover:text-blue-800 hover:underline">
-                    Create a project &rarr;
+                    Create a note &rarr;
                 </a>
             </div>
         </div>
