@@ -155,3 +155,16 @@ ACCOUNT_SIGNUP_FIELDS = ['username*', 'email*', 'password1*', 'password2*']
 ACCOUNT_LOGIN_METHODS = {'email', 'username'}
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'user.forms.CustomSignupForm'
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'EMAIL_AUTHENTICATION': True,
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+    }
+}
+
+SOCIAL_ACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT  =  True

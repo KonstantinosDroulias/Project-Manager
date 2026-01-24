@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
+
+{% block content %}
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            {% trans "Confirm E-mail Address" %}
+        </h2>
+
+        {% if confirmation %}
+            <p class="mt-4 text-center text-sm text-gray-600">
+                {% blocktrans with email=confirmation.email_address.email %}
+                Please confirm that <span class="font-semibold text-gray-900">{{ email }}</span> is an e-mail address for user <span class="font-semibold text-gray-900">{{ user_display }}</span>.
+                {% endblocktrans %}
+            </p>
+
+            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}" class="mt-8">
+                {% csrf_token %}
+                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all">
+                    {% trans "Confirm" %}
+                </button>
+            </form>
+
+        {% else %}
+            <div class="mt-6 rounded-md bg-red-50 p-4 border border-red-200">
+                <div class="flex">
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800">{% trans "Invalid Link" %}</h3>
+                        <div class="mt-2 text-sm text-red-700">
+                            <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}" class="font-bold underline">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            {% blocktrans with provider.name as provider %}
+                Sign In via {{ provider }}
+            {% endblocktrans %}
+        </h2>
+
+        <p class="mt-4 text-center text-sm text-gray-600">
+            {% blocktrans with provider.name as provider %}
+                You are about to sign in using a third party account from <strong>{{ provider }}</strong>.
+            {% endblocktrans %}
+        </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            <div class="flex flex-col gap-3">
+                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all">
+                    {% trans "Continue" %}
+                </button>
+
+                <a href="{% url 'account_login' %}" class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-all">
+                    {% trans "Cancel" %}
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock content %}
