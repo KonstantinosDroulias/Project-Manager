@@ -1,12 +1,12 @@
 # nixpacks.toml
 
-# Set Python version
+# Set Python version and include pip
 [phases.setup]
-nixPkgs = ["python311", "postgresql"]
+nixPkgs = ["python311", "python311Packages.pip", "postgresql"]
 
 # Install Python dependencies
 [phases.install]
-cmds = ["python -m pip install --upgrade pip", "python -m pip install -r requirements.txt"]
+cmds = ["pip install -r requirements.txt"]
 
 # Collect static files (migrations run at start since DB may not be available at build time)
 [phases.build]
