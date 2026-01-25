@@ -2,13 +2,13 @@
 
 # Set Python version and include pip
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip", "postgresql"]
+nixPkgs = ["python312", "python312Packages.pip", "postgresql"]
 
 # Install Python dependencies
 [phases.install]
 cmds = ["pip install -r requirements.txt --break-system-packages"]
 
-# Collect static files (migrations run at start since DB may not be available at build time)
+# Collect static files
 [phases.build]
 cmds = ["python manage.py collectstatic --noinput"]
 
@@ -16,7 +16,7 @@ cmds = ["python manage.py collectstatic --noinput"]
 [start]
 cmd = "python manage.py migrate --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2"
 
-# Environment variables for the build
+# Environment variables
 [variables]
 PYTHONUNBUFFERED = "1"
 DJANGO_SETTINGS_MODULE = "config.settings"
