@@ -135,10 +135,16 @@ CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost').spl
 
 STATIC_URL = 'static/'
 STORAGES = {
+    'default': {
+          'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     }
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # This tells Django: "Also look for files in this folder in the root directory"
 STATICFILES_DIRS = [
@@ -178,3 +184,5 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SOCIAL_ACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT  =  True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
