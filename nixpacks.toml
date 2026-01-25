@@ -1,0 +1,22 @@
+# nixpacks.toml
+
+# Set Python version
+[phases.setup]
+nixPkgs = ["python311", "postgresql"]
+
+# Install Python dependencies
+[phases.install]
+cmds = ["pip install -r requirements.txt"]
+
+# Collect static files (migrations run at start since DB may not be available at build time)
+[phases.build]
+cmds = ["python manage.py collectstatic --noinput"]
+
+# Run migrations then start Gunicorn
+[start]
+cmd = "python manage.py migrate --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2"
+
+# Environment variables for the build
+[variables]
+PYTHONUNBUFFERED = "1"
+DJANGO_SETTINGS_MODULE = "config.settings"
