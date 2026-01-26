@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://127.0.0.1').split(',')
 
 # Application definition
+SITE_ID = 1
 
 INSTALLED_APPS = [
     'unfold',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'user',
     'project',
     'allauth',
