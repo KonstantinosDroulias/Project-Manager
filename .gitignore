@@ -150,7 +150,8 @@ activemq-data/
 *.sage.py
 
 # Environments
-.env
+.env.local
+.env.prod
 .envrc
 .idea/
 .venv
@@ -288,7 +289,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+.env.local
 .env.*
 !.env.example
 
