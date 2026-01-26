@@ -7,34 +7,14 @@ RUN mkdir /app
 # Set the working directory
 WORKDIR /app
 
-# Set environment variables
+# Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# --- NEW: Install System Deps & Node.js (for Tailwind) ---
-RUN apt-get update && apt-get install -y \
-    nodejs \
-    npm \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-# ---------------------------------------------------------
-
-# Install Python dependencies
+# Install dependencies first for caching benefit
 RUN pip install --upgrade pip
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
-
-# --- NEW: Build Tailwind CSS ---
-# 1. Copy package.json (assuming it exists)
-COPY package.json package-lock.json* /app/
-# 2. Install Node dependencies
-RUN npm install
-# 3. Copy the entire project (Tailwind needs to scan your templates!)
-COPY . .
-
-RUN mkdir -p static/css && touch static/css/styles.css
-# 4. Build the CSS
-RUN npm run build
-# -------------------------------
 
 # Stage 2: Production stage
 FROM python:3.13-slim
@@ -50,15 +30,10 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 # Set the working directory
 WORKDIR /app
 
-# Copy application code (This copies your source code)
+# Copy application code
 COPY --chown=appuser:appuser . .
 
-# --- NEW: Copy the BUILT Static files (CSS) from builder ---
-# This overwrites the local static folder with the one containing your built CSS
-COPY --from=builder --chown=appuser:appuser /app/static /app/static
-# -----------------------------------------------------------
-
-# Set environment variables
+# Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
@@ -69,7 +44,7 @@ USER appuser
 EXPOSE 8000
 
 # Make entry file executable
-RUN chmod +x /app/entrypoint.prod.sh
+RUN chmod +x  /app/entrypoint.prod.sh
 
-# Start the application
+# Start the application using Gunicorn
 CMD ["/app/entrypoint.prod.sh"]
