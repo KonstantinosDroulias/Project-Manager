@@ -7,8 +7,10 @@ Django==6.0.1
 django-allauth==65.14.0
 django-unfold==0.76.0
 djangorestframework==3.16.1
+gunicorn==24.1.1
 idna==3.11
 oauthlib==3.3.1
+packaging==26.0
 pillow==12.1.0
 psycopg2-binary==2.9.11
 pycparser==3.0
@@ -18,3 +20,4 @@ requests==2.32.5
 requests-oauthlib==2.0.0
 sqlparse==0.5.5
 urllib3==2.6.3
+whitenoise==6.11.0
