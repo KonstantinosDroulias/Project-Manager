@@ -31,7 +31,7 @@ RUN npm install
 # 3. Copy the entire project (Tailwind needs to scan your templates!)
 COPY . .
 # 4. Build the CSS
-RUN npm run watch:css
+RUN npm run build
 # -------------------------------
 
 # Stage 2: Production stage
