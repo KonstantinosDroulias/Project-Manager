@@ -30,6 +30,8 @@ COPY package.json package-lock.json* /app/
 RUN npm install
 # 3. Copy the entire project (Tailwind needs to scan your templates!)
 COPY . .
+
+RUN mkdir -p static/css && touch static/css/styles.css
 # 4. Build the CSS
 RUN npm run build
 # -------------------------------
