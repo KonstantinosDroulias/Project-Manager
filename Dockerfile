@@ -4,7 +4,7 @@ FROM node:20-alpine AS node-builder
 WORKDIR /app
 
 # Copy package files and install dependencies
-COPY package.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy static files and build CSS
